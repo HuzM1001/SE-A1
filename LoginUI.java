@@ -1,53 +1,83 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class LoginUI extends JFrame {
 
-    private JTextField usernameField;
-    private JPasswordField passwordField;
-    private JButton loginButton;
-
     public LoginUI() {
-        setTitle("Library Management System - Login");
-        setSize(400, 300);
+
+        setTitle("Library Management System");
+        setSize(450, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
+        // Main Panel
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(new Color(244, 246, 247));
 
-        JLabel titleLabel = new JLabel("Login");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 22));
-        titleLabel.setBounds(160, 20, 100, 30);
-        panel.add(titleLabel);
+        // Header
+        JPanel header = new JPanel();
+        header.setBackground(new Color(44, 62, 80));
+        header.setPreferredSize(new Dimension(450, 70));
 
-        JLabel userLabel = new JLabel("Username:");
-        userLabel.setBounds(50, 80, 100, 25);
-        panel.add(userLabel);
+        JLabel title = new JLabel("Library Management System");
+        title.setForeground(Color.WHITE);
+        title.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        header.add(title);
 
-        usernameField = new JTextField();
-        usernameField.setBounds(150, 80, 180, 25);
-        panel.add(usernameField);
+        mainPanel.add(header, BorderLayout.NORTH);
 
-        JLabel passLabel = new JLabel("Password:");
-        passLabel.setBounds(50, 120, 100, 25);
-        panel.add(passLabel);
+        // Center Form
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        formPanel.setBackground(new Color(244, 246, 247));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
 
-        passwordField = new JPasswordField();
-        passwordField.setBounds(150, 120, 180, 25);
-        panel.add(passwordField);
+        JLabel loginLabel = new JLabel("Login");
+        loginLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        loginLabel.setForeground(new Color(44, 62, 80));
 
-        loginButton = new JButton("Login");
-        loginButton.setBounds(150, 170, 120, 35);
-        panel.add(loginButton);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        formPanel.add(loginLabel, gbc);
 
-        loginButton.addActionListener(e -> {
+        gbc.gridwidth = 1;
+
+        gbc.gridy++;
+        formPanel.add(new JLabel("Username:"), gbc);
+
+        gbc.gridx = 1;
+        JTextField username = new JTextField(15);
+        formPanel.add(username, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy++;
+        formPanel.add(new JLabel("Password:"), gbc);
+
+        gbc.gridx = 1;
+        JPasswordField password = new JPasswordField(15);
+        formPanel.add(password, gbc);
+
+        gbc.gridy++;
+        gbc.gridx = 0;
+        gbc.gridwidth = 2;
+
+        JButton loginBtn = new JButton("Login");
+        loginBtn.setBackground(new Color(41, 128, 185));
+        loginBtn.setForeground(Color.WHITE);
+        loginBtn.setFocusPainted(false);
+        loginBtn.setPreferredSize(new Dimension(120, 35));
+
+        formPanel.add(loginBtn, gbc);
+
+        loginBtn.addActionListener(e -> {
             new ViewBooksUI();
             dispose();
         });
 
-        add(panel);
+        mainPanel.add(formPanel, BorderLayout.CENTER);
+
+        add(mainPanel);
         setVisible(true);
     }
 

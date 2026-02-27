@@ -3,67 +3,67 @@ import java.awt.*;
 
 public class AddBookUI extends JFrame {
 
-    private JTextField titleField, authorField, isbnField;
-    private JSpinner quantitySpinner;
-
     public AddBookUI() {
 
         setTitle("Add New Book");
-        setSize(450, 350);
+        setSize(500, 450);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(new Color(244, 246, 247));
 
-        JLabel heading = new JLabel("Add New Book");
-        heading.setFont(new Font("Arial", Font.BOLD, 20));
-        heading.setBounds(150, 20, 200, 30);
-        panel.add(heading);
+        // Header
+        JPanel header = new JPanel();
+        header.setBackground(new Color(44, 62, 80));
+        header.setPreferredSize(new Dimension(500, 60));
 
-        JLabel titleLabel = new JLabel("Title:");
-        titleLabel.setBounds(50, 80, 100, 25);
-        panel.add(titleLabel);
+        JLabel title = new JLabel("Add New Book");
+        title.setForeground(Color.WHITE);
+        title.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        header.add(title);
 
-        titleField = new JTextField();
-        titleField.setBounds(150, 80, 200, 25);
-        panel.add(titleField);
+        mainPanel.add(header, BorderLayout.NORTH);
 
-        JLabel authorLabel = new JLabel("Author:");
-        authorLabel.setBounds(50, 120, 100, 25);
-        panel.add(authorLabel);
+        // Form
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        formPanel.setBackground(new Color(244, 246, 247));
 
-        authorField = new JTextField();
-        authorField.setBounds(150, 120, 200, 25);
-        panel.add(authorField);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(15, 10, 10, 10);
+        gbc.anchor = GridBagConstraints.WEST;
 
-        JLabel isbnLabel = new JLabel("ISBN:");
-        isbnLabel.setBounds(50, 160, 100, 25);
-        panel.add(isbnLabel);
+        String[] labels = {"Title:", "Author:", "ISBN:", "Quantity:"};
+        JTextField titleField = new JTextField(18);
+        JTextField authorField = new JTextField(18);
+        JTextField isbnField = new JTextField(18);
+        JSpinner quantity = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
 
-        isbnField = new JTextField();
-        isbnField.setBounds(150, 160, 200, 25);
-        panel.add(isbnField);
+        Component[] fields = {titleField, authorField, isbnField, quantity};
 
-        JLabel quantityLabel = new JLabel("Quantity:");
-        quantityLabel.setBounds(50, 200, 100, 25);
-        panel.add(quantityLabel);
+        for (int i = 0; i < labels.length; i++) {
+            gbc.gridx = 0;
+            gbc.gridy = i;
+            formPanel.add(new JLabel(labels[i]), gbc);
 
-        quantitySpinner = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
-        quantitySpinner.setBounds(150, 200, 60, 25);
-        panel.add(quantitySpinner);
+            gbc.gridx = 1;
+            formPanel.add(fields[i], gbc);
+        }
 
-        JButton addButton = new JButton("Add Book");
-        addButton.setBounds(100, 250, 120, 35);
-        panel.add(addButton);
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
 
-        JButton cancelButton = new JButton("Cancel");
-        cancelButton.setBounds(240, 250, 120, 35);
-        panel.add(cancelButton);
+        JButton addBtn = new JButton("Add Book");
+        addBtn.setBackground(new Color(39, 174, 96));
+        addBtn.setForeground(Color.WHITE);
+        addBtn.setFocusPainted(false);
+        addBtn.setPreferredSize(new Dimension(140, 40));
 
-        cancelButton.addActionListener(e -> dispose());
+        formPanel.add(addBtn, gbc);
 
-        add(panel);
+        mainPanel.add(formPanel, BorderLayout.CENTER);
+
+        add(mainPanel);
         setVisible(true);
     }
 }
